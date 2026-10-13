@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #FAF5E8;
+    color: #141316;
+    font-family: 'Fredoka', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+    -webkit-user-select: none;
+    /* Chaotic notebook doodle grid with subtle ink speckles */
+    background-image: 
+      radial-gradient(#141316 0.75px, transparent 0.75px),
+      radial-gradient(#FFE600 20%, transparent 60%),
+      radial-gradient(#FF4834 15%, transparent 60%);
+    background-size: 24px 24px, 100vw 100vh, 80vw 80vh;
+    background-position: 0 0, 10% 20%, 90% 80%;
+    background-attachment: fixed;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  body.dark {
+    background-color: #121118;
+    color: #FAF5E8;
+    background-image: 
+      radial-gradient(rgba(250, 245, 232, 0.2) 0.75px, transparent 0.75px),
+      radial-gradient(rgba(255, 230, 0, 0.12) 20%, transparent 60%),
+      radial-gradient(rgba(255, 72, 52, 0.12) 15%, transparent 60%);
+  }
+}
+
+/* Hard ink outline card styles */
+.sketch-card {
+  border: 3px solid #141316;
+  box-shadow: 4px 4px 0px #141316;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.sketch-card-lg {
+  border: 3.5px solid #141316;
+  box-shadow: 6px 6px 0px #141316;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.sketch-btn {
+  border: 2.5px solid #141316;
+  box-shadow: 3px 3px 0px #141316;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.sketch-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #141316;
+}
+
+.sketch-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #141316;
+}
+
+/* Dark mode overrides for cards & buttons */
+.dark .sketch-card {
+  border-color: #FAF5E8;
+  box-shadow: 4px 4px 0px #FFE600;
+  background-color: #1D1B27;
+  color: #FAF5E8;
+}
+
+.dark .sketch-card-lg {
+  border-color: #FAF5E8;
+  box-shadow: 6px 6px 0px #FFE600;
+  background-color: #1D1B27;
+  color: #FAF5E8;
+}
+
+.dark .sketch-btn {
+  border-color: #FAF5E8;
+  box-shadow: 3px 3px 0px #FFE600;
+}
+
+.dark .sketch-btn:hover {
+  box-shadow: 4px 4px 0px #FFE600;
+}
+
+.dark .sketch-btn:active {
+  box-shadow: 1px 1px 0px #FFE600;
+}
+
+/* Masking Tape Decorator */
+.tape-strip {
+  position: absolute;
+  background-color: rgba(255, 230, 0, 0.75);
+  height: 18px;
+  width: 55px;
+  transform: rotate(-3deg);
+  border-left: 2px dashed rgba(20, 19, 22, 0.3);
+  border-right: 2px dashed rgba(20, 19, 22, 0.3);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.dark .tape-strip {
+  background-color: rgba(255, 230, 0, 0.85);
+  border-left: 2px dashed rgba(250, 245, 232, 0.5);
+  border-right: 2px dashed rgba(250, 245, 232, 0.5);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+/* Wobbly sticker stamp font class */
+.font-bungee {
+  font-family: 'Bungee', cursive, sans-serif;
+}
+
+.font-doodle {
+  font-family: 'Patrick Hand', cursive, sans-serif;
+}
+
+/* Custom ink scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF5E8;
+  border-left: 2px solid #141316;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #121118;
+  border-left: 2px solid #FAF5E8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFE600;
+  border: 2px solid #141316;
+  box-shadow: 2px 2px 0px #141316;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #FFE600;
+  border: 2px solid #FAF5E8;
+  box-shadow: 2px 2px 0px #FFE600;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF4834;
+}
+
+/* Dark Mode High-Contrast Typography & Container Enforcements */
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: #FAF5E8;
+}
+
+.dark p {
+  color: #CBD5E1;
+}
+
+/* Form controls in dark mode */
+.dark input[type="text"],
+.dark textarea {
+  background-color: #262332 !important;
+  color: #FAF5E8 !important;
+  border-color: #FAF5E8 !important;
+}
+
+.dark input[type="text"]::placeholder,
+.dark textarea::placeholder {
+  color: #94A3B8 !important;
+}

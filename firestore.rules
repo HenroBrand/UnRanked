@@ -1,0 +1,50 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Health / connection probe
+    match /test/connection {
+      allow read: if true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Party game rooms: accessible by room code for both authenticated and guest party players
+    match /rooms/{roomId} {
+      allow get: if isValidId(roomId);
+      allow list: if true;
+      allow create, update, delete: if isValidId(roomId);
+
+      match /players/{playerId} {
+        allow get, list: if isValidId(roomId);
+        allow create, update, delete: if isValidId(roomId) && isValidId(playerId);
+      }
+
+      // Secret rankings per player during active round
+      match /secretRankings/{playerId} {
+        allow get, list: if isValidId(roomId);
+        allow create, update, delete: if isValidId(roomId) && isValidId(playerId);
+      }
+
+      // Revealed rankings visible to all players once round concludes
+      match /revealedRankings/{playerId} {
+        allow get, list: if isValidId(roomId);
+        allow create, update, delete: if isValidId(roomId) && isValidId(playerId);
+      }
+
+      // Votes cast per player
+      match /votes/{playerId} {
+        allow get, list: if isValidId(roomId);
+        allow create, update, delete: if isValidId(roomId) && isValidId(playerId);
+      }
+    }
+  }
+}

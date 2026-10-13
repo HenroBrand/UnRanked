@@ -1,0 +1,104 @@
+{
+  "entities": {
+    "Room": {
+      "title": "Room",
+      "description": "Multiplayer game room authoritative state and configuration",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 16 },
+        "code": { "type": "string", "maxLength": 8 },
+        "hostId": { "type": "string", "maxLength": 128 },
+        "hostName": { "type": "string", "maxLength": 32 },
+        "phase": { "type": "string", "enum": ["LOBBY", "ROUND_INTRO", "RANKING", "REVEAL", "VOTING", "ROUND_RESULTS", "FINAL_RESULTS"] },
+        "roundNumber": { "type": "number" },
+        "totalRounds": { "type": "number" },
+        "timerSeconds": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "completed", "abandoned"] },
+        "updatedAt": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "code", "hostId", "phase", "roundNumber", "totalRounds", "status"]
+    },
+    "Player": {
+      "title": "Player",
+      "description": "Connected player state within a room",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 32 },
+        "avatar": { "type": "string", "maxLength": 64 },
+        "color": { "type": "string", "maxLength": 32 },
+        "isHost": { "type": "boolean" },
+        "isReady": { "type": "boolean" },
+        "totalScore": { "type": "number" },
+        "roundScore": { "type": "number" },
+        "worstChoiceAwards": { "type": "number" },
+        "specialAwards": { "type": "number" },
+        "hasSubmittedRanking": { "type": "boolean" },
+        "hasVoted": { "type": "boolean" },
+        "lastActive": { "type": "string" }
+      },
+      "required": ["id", "name", "avatar", "color", "isHost", "isReady", "totalScore"]
+    },
+    "SecretRanking": {
+      "title": "SecretRanking",
+      "description": "Private unrevealed ranking choices made by a player for the current round",
+      "type": "object",
+      "properties": {
+        "playerId": { "type": "string", "maxLength": 128 },
+        "roundNumber": { "type": "number" },
+        "rankedItemIds": { "type": "string", "maxLength": 32 },
+        "submittedAt": { "type": "string" }
+      },
+      "required": ["playerId", "roundNumber", "rankedItemIds"]
+    },
+    "RevealedRanking": {
+      "title": "RevealedRanking",
+      "description": "Public revealed ranking choices published upon reveal",
+      "type": "object",
+      "properties": {
+        "playerId": { "type": "string", "maxLength": 128 },
+        "playerName": { "type": "string", "maxLength": 32 },
+        "roundNumber": { "type": "number" },
+        "rankedItemIds": { "type": "string", "maxLength": 32 },
+        "revealedAt": { "type": "string" }
+      },
+      "required": ["playerId", "playerName", "roundNumber", "rankedItemIds"]
+    },
+    "Vote": {
+      "title": "Vote",
+      "description": "Player vote for who had the worst choices in the round",
+      "type": "object",
+      "properties": {
+        "voterId": { "type": "string", "maxLength": 128 },
+        "voterName": { "type": "string", "maxLength": 32 },
+        "targetPlayerId": { "type": "string", "maxLength": 128 },
+        "reactionPhrase": { "type": "string", "maxLength": 64 },
+        "roundNumber": { "type": "number" }
+      },
+      "required": ["voterId", "targetPlayerId", "roundNumber"]
+    }
+  },
+  "firestore": {
+    "/rooms/{roomId}": {
+      "schema": "Room",
+      "description": "Multiplayer room state"
+    },
+    "/rooms/{roomId}/players/{playerId}": {
+      "schema": "Player",
+      "description": "Active players in the room"
+    },
+    "/rooms/{roomId}/secretRankings/{playerId}": {
+      "schema": "SecretRanking",
+      "description": "Confidential player ranking for the active round"
+    },
+    "/rooms/{roomId}/revealedRankings/{playerId}": {
+      "schema": "RevealedRanking",
+      "description": "Public revealed rankings visible to all players"
+    },
+    "/rooms/{roomId}/votes/{playerId}": {
+      "schema": "Vote",
+      "description": "Ballot cast by a player for the worst rankings"
+    }
+  }
+}

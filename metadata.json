@@ -1,0 +1,6 @@
+{
+  "name": "UnRanked: Order of Chaos",
+  "description": "A chaotic multiplayer party game where friends secretly rank absurd dilemmas from best to worst, vote on unhinged opinions, and argue with an eccentric AI host.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
